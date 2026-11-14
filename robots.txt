@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /tools/
 
-Sitemap: https://aggarwalpropertiess.com/sitemap.xml
+Sitemap: https://zeus-shourya.github.io/aggarwal-properties/sitemap.xml

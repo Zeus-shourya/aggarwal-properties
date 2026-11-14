@@ -1,4 +1,11 @@
-# Aggarwal Properties — aggarwalpropertiess.com
+# Aggarwal Properties
+
+Live at https://zeus-shourya.github.io/aggarwal-properties/ (GitHub Pages, `main` branch).
+
+The planned domain is aggarwalpropertiess.com, not bought yet. When it is: add a
+`CNAME` file containing the domain, set the DNS records, and replace the
+`zeus-shourya.github.io/aggarwal-properties/` URLs in the four HTML files,
+`sitemap.xml` and `robots.txt` with the domain.
 
 Static site (no build step). Four pages: `index.html` (Home), `about.html`,
 `projects.html` (interactive plot maps), `investors.html`.
