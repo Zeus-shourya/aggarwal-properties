@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Projects — Interactive Plot Maps | Aggarwal Properties</title>
+<meta name="description" content="Explore every Aggarwal Properties project on an interactive map. Tap any plot to see its area, dimensions and facing. Green plots are available, red plots are sold.">
+<link rel="canonical" href="https://aggarwalpropertiess.com/projects.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Aggarwal Properties">
+<meta property="og:title" content="Interactive Plot Maps — Aggarwal Properties">
+<meta property="og:description" content="Tap any plot to see its area, dimensions, facing and availability.">
+<meta property="og:url" content="https://aggarwalpropertiess.com/projects.html">
+<meta property="og:image" content="https://aggarwalpropertiess.com/assets/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#FFC21A">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Figtree:wght@400..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap nav">
+    <a class="brand" href="index.html" aria-label="Aggarwal Properties — home">
+      <svg viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="14" fill="#2A1605"/><g stroke="#FFC21A" stroke-width="2.6" stroke-linecap="round"><path d="M24 7v4.500M11 13l3 3M37 13l-3 3M6.500 26h4M41.500 26h-4"/></g><circle cx="24" cy="26" r="9.500" fill="#FFC21A"/><path d="M0 31h48v3a14 14 0 0 1-14 14H14A14 14 0 0 1 0 34Z" fill="#F26A0F"/><path d="M0 38.500h48" stroke="#2A1605" stroke-width="1.600" opacity=".35"/></svg>
+      <span class="brand-name">Aggarwal Properties<small>Plots &middot; Land &middot; Investment</small></span>
+    </a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="projects.html" aria-current="page">Projects</a></li>
+      <li><a href="investors.html">Investors</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a class="btn btn-wa btn-sm" href="https://wa.me/917015070104" data-wa="Hi Aggarwal Properties, I would like to know more about your plots.">
+        <span class="ico" data-icon="wa"></span>
+        <span>WhatsApp<span class="long"> us</span></span>
+      </a>
+      <button class="nav-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links"><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section class="page-hero compact">
+  <div class="wrap">
+    <span class="eyebrow">Projects</span>
+    <h1>Pick your plot on the map.</h1>
+    <p class="lead">Choose a project, then tap any plot for its area, dimensions and facing. <b style="color:var(--avail-dark)">Green</b> plots are available and <b style="color:var(--sold-dark)">red</b> plots are sold.</p>
+    <div class="ptabs" id="ptabs" role="tablist" aria-label="Projects"></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="mapwrap">
+      <div class="mapcard">
+        <div class="maptools">
+          <label class="search"><span class="sr" style="position:absolute;left:-9999px">Find a plot by number</span>
+            <input id="plot-search" type="search" inputmode="text" placeholder="Find plot no." autocomplete="off"></label>
+          <div class="chips" id="chips" role="group" aria-label="Filter plots">
+            <button type="button" class="chip" data-f="all" aria-pressed="true">All <b>0</b></button>
+            <button type="button" class="chip" data-f="avail" aria-pressed="false"><i class="g"></i>Available <b>0</b></button>
+            <button type="button" class="chip" data-f="sold" aria-pressed="false"><i class="r"></i>Sold <b>0</b></button>
+          </div>
+        </div>
+        <div class="stage" id="stage">
+          <noscript><p style="padding:24px">The interactive map needs JavaScript. You can also <a href="https://wa.me/917015070104">ask us on WhatsApp</a> for the latest availability.</p></noscript>
+        </div>
+      </div>
+      <aside class="panel" id="panel" aria-live="polite"></aside>
+    </div>
+
+    <p class="muted" id="map-title" style="margin-top:22px;font-weight:600"></p>
+    <div class="pfacts" id="pfacts"></div>
+
+    <div class="section-head" style="margin:56px 0 0">
+      <div><span class="eyebrow">All plots</span><h2 style="font-size:clamp(28px,3.4vw,42px)">Jump straight to a plot number.</h2></div>
+      <p>Every plot in this project, in order. Tap a number to find it on the map.</p>
+    </div>
+    <div class="plotlist" id="plotlist"></div>
+  </div>
+</section>
+
+<section class="section-tight" style="padding-bottom:0">
+  <div class="wrap">
+    <div class="cta">
+      <h2>Want to see it in person?</h2>
+      <p>Send us the plot number and we will arrange a site visit and share the current price.</p>
+      <div class="hero-actions">
+        <a class="btn btn-ghost" href="https://wa.me/917015070104" data-wa="Hi Aggarwal Properties, I would like to book a site visit.">WhatsApp +91 70150 70104</a>
+        <a class="btn btn-ink" href="tel:+917015070104">Call now</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <span class="brand-name">Aggarwal Properties<small>Plots &middot; Land &middot; Investment</small></span>
+        <p>Residential and industrial plots, shown plot by plot. 10+ years in land, 150+ acres transacted. Founded by Aman Goel.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="investors.html">Investors</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Booking &amp; enquiries</h4>
+        <ul>
+          <li><a href="https://wa.me/917015070104" data-wa="">WhatsApp: +91 70150 70104</a></li>
+          <li><a href="tel:+917015070104">Call: +91 70150 70104</a></li>
+          <li><a href="https://aggarwalpropertiess.com/">aggarwalpropertiess.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="legal">
+      <p>&copy; <span data-year>2026</span> Aggarwal Properties. Maps are drawn from the project layout plans for guidance. Plot sizes, dimensions and availability are confirmed at the time of booking.</p>
+    </div>
+  </div>
+</footer>
+
+<a class="wa-float" href="https://wa.me/917015070104" data-wa="Hi Aggarwal Properties, I would like to enquire about a plot." aria-label="Chat on WhatsApp">
+  <span class="ico" data-icon="wa"></span>
+</a>
+
+<script src="data/projects.js"></script>
+<script src="data/status.js"></script>
+<script src="assets/js/plots-data.js"></script>
+<script src="assets/js/plotmap.js"></script>
+<script src="assets/js/site.js"></script>
+<script src="assets/js/projects.js"></script>
+</body>
+</html>
