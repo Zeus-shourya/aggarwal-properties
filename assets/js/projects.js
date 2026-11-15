@@ -16,7 +16,8 @@ window.AP.ready.then(function () {
     tabs.innerHTML = keys.map(function (k) {
       var p = AP.project(k), s = AP.stats(k);
       return '<button type="button" class="ptab" role="tab" data-key="' + k + '" aria-selected="' + (k === current) + '">' +
-        '<b>' + p.name + '</b><span>' + p.type + ' &middot; <em>' + s.available + ' of ' + s.total + ' available</em></span></button>';
+        '<b>' + p.name + '</b><span>' + p.type + ' &middot; <em>' + s.available + ' of ' + s.total + ' available</em>' +
+        (s.resale ? ' &middot; <em class="y">' + s.resale + ' for resale</em>' : '') + '</span></button>';
     }).join('');
   }
   tabs.addEventListener('click', function (e) {
@@ -25,7 +26,7 @@ window.AP.ready.then(function () {
 
   function emptyPanel() {
     panel.innerHTML = '<div class="panel-empty">' +
-      '<svg viewBox="0 0 80 80" fill="none" aria-hidden="true"><circle cx="40" cy="40" r="38" fill="#FFF4D2"/><path d="M22 28h16v14H22zM42 28h16v14H42zM22 46h16v10H22z" fill="#1FA85A"/><path d="M42 46h16v10H42z" fill="#E5484D"/><path d="M50 50l4 14 3-5 5-1z" fill="#2A1605" stroke="#fff" stroke-width="2" stroke-linejoin="round"/></svg>' +
+      '<svg viewBox="0 0 80 80" fill="none" aria-hidden="true"><circle cx="40" cy="40" r="38" fill="#FFF4D2"/><path d="M22 28h16v14H22zM42 28h16v14H42zM22 46h16v10H22z" fill="#1FA85A"/><path d="M42 28h16v14H42z" fill="#FFD60A"/><path d="M42 46h16v10H42z" fill="#E5484D"/><path d="M50 50l4 14 3-5 5-1z" fill="#2A1605" stroke="#fff" stroke-width="2" stroke-linejoin="round"/></svg>' +
       '<b>Tap any plot on the map</b>Its area, dimensions, facing and availability show up here, with a one-tap WhatsApp booking button.</div>';
   }
 
@@ -34,9 +35,11 @@ window.AP.ready.then(function () {
     chips.querySelector('[data-f="all"] b').textContent = s.total;
     chips.querySelector('[data-f="avail"] b').textContent = s.available;
     chips.querySelector('[data-f="sold"] b').textContent = s.sold;
+    chips.querySelector('[data-f="resale"] b').textContent = s.resale;
     facts.innerHTML =
       '<div class="pfact"><b>' + s.total + '</b><span>Total plots</span></div>' +
       '<div class="pfact g"><b>' + s.available + '</b><span>Available</span></div>' +
+      '<div class="pfact y"><b>' + s.resale + '</b><span>For resale</span></div>' +
       '<div class="pfact r"><b>' + s.sold + '</b><span>Sold</span></div>' +
       '<div class="pfact"><b>' + AP.num(s.min) + '&ndash;' + AP.num(s.max) + '</b><span>Plot sizes, sq yd</span></div>';
     title.textContent = p.name + ' — ' + p.type + (p.location ? ', ' + p.location : '');
@@ -44,8 +47,9 @@ window.AP.ready.then(function () {
 
   function renderList() {
     list.innerHTML = AP.maps[current].plots.map(function (p) {
-      return '<button type="button" class="pl' + (AP.isSold(current, p.id) ? ' sold' : '') + (map.sel === p.id ? ' on' : '') +
-        '" data-id="' + p.id + '" title="Plot ' + p.n + ' · ' + p.a + ' sq yd">' + p.n + '</button>';
+      var st = AP.status(current, p.id);
+      return '<button type="button" class="pl ' + st + (map.sel === p.id ? ' on' : '') +
+        '" data-id="' + p.id + '" title="Plot ' + p.n + ' · ' + p.a + ' sq yd · ' + AP.STATUS[st].label + '">' + p.n + '</button>';
     }).join('');
   }
   list.addEventListener('click', function (e) {
@@ -107,12 +111,12 @@ window.AP.ready.then(function () {
   if (edit) {
     var bar = document.createElement('div');
     bar.className = 'editbar';
-    bar.innerHTML = '<div class="wrap"><span>Preview mode &mdash; click a plot to flip it between available (green) and sold (red). This is only a preview: to save, tick the same plots in the <a href="admin.html" style="color:#FFD75A">website editor</a>.</span>' +
+    bar.innerHTML = '<div class="wrap"><span>Preview mode &mdash; each click on a plot steps it through available (green) &rarr; sold (red) &rarr; for resale (yellow). This is only a preview: to save, pick the same plots in the <a href="admin.html" style="color:#FFD75A">website editor</a>.</span>' +
       '<button type="button" class="btn btn-sun" id="copy-status">Copy as status.json</button></div>';
     document.querySelector('main').prepend(bar);
     $('copy-status').addEventListener('click', function () {
       var o = {};
-      keys.forEach(function (k) { o[k] = AP.soldList(k); });
+      keys.forEach(function (k) { o[k] = AP.listOf(k, 'sold'); o[k + '_resale'] = AP.listOf(k, 'resale'); });
       var text = JSON.stringify(o, null, 2) + '\n';
       var btn = this;
       function done(ok) { btn.textContent = ok ? 'Copied' : 'Copy failed — see console'; if (!ok) console.log(text); }

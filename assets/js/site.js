@@ -55,11 +55,12 @@ window.AP.ready.then(function () {
     cards.innerHTML = keys.map(function (k) {
       var p = AP.project(k), s = AP.stats(k);
       return '<a class="card pcard reveal" href="projects.html#' + k + '">' +
-        '<div class="pcard-map"><span class="pill"><i></i>' + s.available + ' available</span><svg data-thumb="' + k + '" aria-hidden="true"></svg></div>' +
+        '<div class="pcard-map"><span class="pill"><i></i>' + s.available + ' available' + (s.resale ? ' &middot; ' + s.resale + ' resale' : '') + '</span><svg data-thumb="' + k + '" aria-hidden="true"></svg></div>' +
         '<div class="pcard-body"><span class="pcard-type">' + p.type + '</span><h3>' + p.name + '</h3>' +
         (p.location ? '<span class="pcard-loc">' + pin + p.location + '</span>' : '') +
         '<p>' + p.blurb + '</p>' +
-        '<div class="pcard-facts"><span><b>' + s.total + '</b>plots</span><span><b>' + AP.num(s.min) + '&ndash;' + AP.num(s.max) + '</b>sq yd</span><span class="ok"><b>' + s.available + '</b>available</span></div>' +
+        '<div class="pcard-facts"><span><b>' + s.total + '</b>plots</span><span><b>' + AP.num(s.min) + '&ndash;' + AP.num(s.max) + '</b>sq yd</span><span class="ok"><b>' + s.available + '</b>available</span>' +
+        (s.resale ? '<span class="re"><b>' + s.resale + '</b>for resale</span>' : '') + '</div>' +
         '<span class="pcard-go">Open the interactive map ' + arrow + '</span></div></a>';
     }).join('');
     cards.querySelectorAll('svg[data-thumb]').forEach(function (svg) { AP.thumb(svg, svg.getAttribute('data-thumb')); });
@@ -72,8 +73,8 @@ window.AP.ready.then(function () {
       var p = AP.project(k), s = AP.stats(k);
       return '<tr><td><b>' + p.name + '</b><small>' + p.type + (p.location ? ' &middot; ' + p.location : '') + '</small></td>' +
         '<td>' + s.total + '</td><td>' + AP.num(s.min) + ' &ndash; ' + AP.num(s.max) + ' sq yd</td>' +
-        '<td><span class="g">' + s.available + ' available</span> &middot; <span class="r">' + s.sold + ' sold</span>' +
-        '<div class="bar"><i style="width:' + (100 * s.available / s.total).toFixed(1) + '%"></i></div></td>' +
+        '<td><span class="g">' + s.available + ' available</span> &middot; <span class="y">' + s.resale + ' for resale</span> &middot; <span class="r">' + s.sold + ' sold</span>' +
+        '<div class="bar"><i style="width:' + (100 * s.available / s.total).toFixed(1) + '%"></i><i class="y" style="width:' + (100 * s.resale / s.total).toFixed(1) + '%"></i></div></td>' +
         '<td><a href="projects.html#' + k + '">View map &rarr;</a></td></tr>';
     }).join('');
   }

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Projects — Interactive Plot Maps | Aggarwal Properties</title>
-<meta name="description" content="Explore every Aggarwal Properties project on an interactive map. Tap any plot to see its area, dimensions and facing. Green plots are available, red plots are sold.">
+<meta name="description" content="Explore every Aggarwal Properties project on an interactive map. Tap any plot to see its area, dimensions and facing. Green plots are available, yellow plots are available for resale, red plots are sold.">
 <link rel="canonical" href="https://zeus-shourya.github.io/aggarwal-properties/projects.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Aggarwal Properties">
@@ -50,7 +50,7 @@
   <div class="wrap">
     <span class="eyebrow">Projects</span>
     <h1>Pick your plot on the map.</h1>
-    <p class="lead">Choose a project, then tap any plot for its area, dimensions and facing. <b style="color:var(--avail-dark)">Green</b> plots are available and <b style="color:var(--sold-dark)">red</b> plots are sold.</p>
+    <p class="lead">Choose a project, then tap any plot for its area, dimensions and facing. <b style="color:var(--avail-dark)">Green</b> plots are available, <b style="color:var(--resale-dark);background:#FFE44D;padding:0 6px;border-radius:6px">yellow</b> plots are available for resale and <b style="color:var(--sold-dark)">red</b> plots are sold.</p>
     <div class="ptabs" id="ptabs" role="tablist" aria-label="Projects"></div>
   </div>
 </section>
@@ -65,6 +65,7 @@
           <div class="chips" id="chips" role="group" aria-label="Filter plots">
             <button type="button" class="chip" data-f="all" aria-pressed="true">All <b>0</b></button>
             <button type="button" class="chip" data-f="avail" aria-pressed="false"><i class="g"></i>Available <b>0</b></button>
+            <button type="button" class="chip" data-f="resale" aria-pressed="false"><i class="y"></i>For resale <b>0</b></button>
             <button type="button" class="chip" data-f="sold" aria-pressed="false"><i class="r"></i>Sold <b>0</b></button>
           </div>
         </div>

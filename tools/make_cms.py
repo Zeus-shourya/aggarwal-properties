@@ -4,8 +4,8 @@ Run from the site folder after the plot maps or project names change:
 
     python tools/make_cms.py
 
-The form has one tick-list of plots per project; whatever is ticked is saved
-to data/status.json as SOLD.
+The form has two pick-lists of plots per project, saved to data/status.json:
+"p1" = sold (red) and "p1_resale" = available for resale (yellow).
 """
 import json, re, pathlib
 
@@ -29,7 +29,7 @@ out = [
     "",
     "content:",
     "  - name: sold",
-    "    label: Sold plots",
+    '    label: "Sold & resale plots"',
     "    type: file",
     "    path: data/status.json",
     "    format: json",
@@ -37,17 +37,27 @@ out = [
 ]
 for key, m in maps.items():
     name = names.get(key, key)
-    out += [
-        f"      - name: {key}",
-        f"        label: {q(name + ' - SOLD plots')}",
-        "        type: select",
-        f"        description: {q('Pick every plot that is SOLD in ' + name + ' (' + types.get(key, 'plots') + '). Sold plots turn red on the website; all other plots stay green. Remove a plot from this list to make it available again.')}",
-        "        options:",
-        "          multiple: true",
-        f"          placeholder: {q('Type a plot number...')}",
-        "          values:",
+    kind = types.get(key, "plots")
+    lists = [
+        (key, name + " - SOLD plots (red)",
+         f"Pick every plot that is SOLD in {name} ({kind}). Sold plots turn red on the website; "
+         "plots in neither list stay green. Remove a plot from this list to make it available again."),
+        (key + "_resale", name + " - plots available for RESALE (yellow)",
+         f"Pick every plot in {name} that its owner is offering for RESALE. These turn yellow on the "
+         "website. A plot picked in both lists shows as yellow."),
     ]
-    for p in m["plots"]:
-        out.append(f"            - {{ name: {q(p['id'])}, label: {q('Plot ' + p['n'] + '  (' + format(p['a'], 'g') + ' sq yd)')} }}")
+    for field, label, desc in lists:
+        out += [
+            f"      - name: {field}",
+            f"        label: {q(label)}",
+            "        type: select",
+            f"        description: {q(desc)}",
+            "        options:",
+            "          multiple: true",
+            f"          placeholder: {q('Type a plot number...')}",
+            "          values:",
+        ]
+        for p in m["plots"]:
+            out.append(f"            - {{ name: {q(p['id'])}, label: {q('Plot ' + p['n'] + '  (' + format(p['a'], 'g') + ' sq yd)')} }}")
 (root / ".pages.yml").write_text("\n".join(out) + "\n", "utf-8")
 print("wrote .pages.yml:", {k: len(m["plots"]) for k, m in maps.items()}, names)

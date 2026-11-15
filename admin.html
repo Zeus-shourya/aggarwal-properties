@@ -29,7 +29,7 @@
   <div class="wrap">
     <a href="index.html" style="font-weight:600;color:var(--ink-2);text-decoration:none">&larr; Back to website</a>
     <h1>Website editor</h1>
-    <p class="lead">Mark plots as sold or available yourself. No coding. The website updates on its own a minute or two after you save.</p>
+    <p class="lead">Mark plots as sold, available or available for resale yourself. No coding. The website updates on its own a minute or two after you save.</p>
     <div class="hero-actions" style="margin-top:22px">
       <a class="btn btn-sun" href="https://app.pagescms.org" target="_blank" rel="noopener">Open the editor &rarr;</a>
       <a class="btn btn-ghost" href="projects.html?edit=1">Try it on the map first</a>
@@ -39,24 +39,28 @@
 
 <main class="section-tight">
   <div class="wrap" style="max-width:860px">
-    <h2 class="h2" style="font-size:clamp(28px,3.4vw,40px);max-width:none;margin:0 0 22px">Mark a plot as sold</h2>
+    <h2 class="h2" style="font-size:clamp(28px,3.4vw,40px);max-width:none;margin:0 0 14px">Mark a plot as sold or for resale</h2>
+    <p style="margin:0 0 22px;display:flex;gap:18px;flex-wrap:wrap">
+      <span class="key"><i style="background:var(--avail)"></i>Green = available</span>
+      <span class="key"><i style="background:var(--resale);box-shadow:inset 0 0 0 1.5px var(--resale-dark)"></i>Yellow = available for resale</span>
+      <span class="key"><i style="background:var(--sold)"></i>Red = sold</span>
+    </p>
     <ol class="guide">
       <li><b>Open the editor</b> with the button above and log in with the email that was invited.
         <span class="hi">ऊपर वाले बटन से Editor खोलें और invite वाले email से login करें।</span></li>
-      <li>Open <b>aggarwal-properties</b>, then click <b>Sold plots</b> on the left.
-        <span class="hi">बाईं तरफ़ <b>Sold plots</b> पर क्लिक करें।</span></li>
-      <li>Find the project (<b>MANSA - 06</b>, <b>MANSA - 05</b> or <b>MANSA - 04</b>). Click its box, <b>type the plot number</b> and pick it from the list. Repeat for every sold plot.
-        <span class="hi">Project चुनें, box में plot number लिखें और list में से चुनें। हर बिके हुए plot के लिए ऐसा ही करें।</span></li>
-      <li>Click <b>Save</b>. In about <b>1–2 minutes</b> those plots turn
-        <span class="key"><i style="background:var(--sold)"></i>red</span> on the website. Every plot that is not in the list stays
-        <span class="key"><i style="background:var(--avail)"></i>green</span>.
-        <span class="hi"><b>Save</b> दबाएँ। 1–2 मिनट में वे plot वेबसाइट पर लाल (sold) दिखेंगे। बाकी सब हरे (available) रहेंगे।</span></li>
+      <li>Open <b>aggarwal-properties</b>, then click <b>Sold &amp; resale plots</b> on the left.
+        <span class="hi">बाईं तरफ़ <b>Sold &amp; resale plots</b> पर क्लिक करें।</span></li>
+      <li>Each project (<b>MANSA - 06</b>, <b>MANSA - 05</b>, <b>MANSA - 04</b>) has two boxes: <b>SOLD plots (red)</b> and <b>plots available for RESALE (yellow)</b>. Click the right box, <b>type the plot number</b> and pick it from the list. Repeat for every plot.
+        <span class="hi">हर project के दो box हैं: <b>SOLD (लाल)</b> और <b>RESALE (पीला)</b>। सही box में plot number लिखें और list में से चुनें।</span></li>
+      <li>Click <b>Save</b>. In about <b>1–2 minutes</b> the website shows the sold plots in red and the resale plots in yellow. Every plot that is in neither box stays green.
+        <span class="hi"><b>Save</b> दबाएँ। 1–2 मिनट में sold plot लाल और resale plot पीले दिखेंगे। बाकी सब हरे (available) रहेंगे।</span></li>
     </ol>
 
     <h2 class="h2" style="font-size:clamp(28px,3.4vw,40px);max-width:none;margin:48px 0 22px">Good to know</h2>
     <div class="tips">
-      <div><h3>Plot available again?</h3><p>Open <b>Sold plots</b>, click the small <b>&times;</b> next to that plot number to remove it from the list, then <b>Save</b>. It turns green again.</p></div>
-      <div><h3>Not sure which plot?</h3><p>Open the map with <b>Try it on the map first</b>. Clicking plots there only previews red and green; nothing is saved until you use the editor.</p></div>
+      <div><h3>Plot available again?</h3><p>Click the small <b>&times;</b> next to that plot number to remove it from its box, then <b>Save</b>. A plot in neither box is green again.</p></div>
+      <div><h3>Sold plot now up for resale?</h3><p>Add it to the <b>RESALE</b> box. You can leave it in the SOLD box too: a plot in both shows yellow.</p></div>
+      <div><h3>Not sure which plot?</h3><p>Open the map with <b>Try it on the map first</b>. Each click there steps a plot through green, red and yellow as a preview; nothing is saved until you use the editor.</p></div>
       <div><h3>Two plots with one number</h3><p>MANSA - 05 has two plots numbered 97 and MANSA - 04 has two each of C-5, C-6 and C-7. The list shows the size beside each one so you can pick the right plot.</p></div>
       <div><h3>Still showing the old colour?</h3><p>Wait two minutes and refresh the page. On a phone, pull down to refresh.</p></div>
     </div>

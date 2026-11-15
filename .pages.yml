@@ -6,15 +6,198 @@
 
 content:
   - name: sold
-    label: Sold plots
+    label: "Sold & resale plots"
     type: file
     path: data/status.json
     format: json
     fields:
       - name: p1
-        label: "MANSA - 06 - SOLD plots"
+        label: "MANSA - 06 - SOLD plots (red)"
         type: select
-        description: "Pick every plot that is SOLD in MANSA - 06 (Residential plots). Sold plots turn red on the website; all other plots stay green. Remove a plot from this list to make it available again."
+        description: "Pick every plot that is SOLD in MANSA - 06 (Residential plots). Sold plots turn red on the website; plots in neither list stay green. Remove a plot from this list to make it available again."
+        options:
+          multiple: true
+          placeholder: "Type a plot number..."
+          values:
+            - { name: "1", label: "Plot 1  (122.96 sq yd)" }
+            - { name: "2", label: "Plot 2  (81 sq yd)" }
+            - { name: "3", label: "Plot 3  (80.5 sq yd)" }
+            - { name: "4", label: "Plot 4  (80.59 sq yd)" }
+            - { name: "5", label: "Plot 5  (81 sq yd)" }
+            - { name: "6", label: "Plot 6  (81.6 sq yd)" }
+            - { name: "7", label: "Plot 7  (82.36 sq yd)" }
+            - { name: "8", label: "Plot 8  (83.17 sq yd)" }
+            - { name: "9", label: "Plot 9  (84 sq yd)" }
+            - { name: "10", label: "Plot 10  (84.95 sq yd)" }
+            - { name: "11", label: "Plot 11  (86 sq yd)" }
+            - { name: "12", label: "Plot 12  (87.13 sq yd)" }
+            - { name: "13", label: "Plot 13  (88.23 sq yd)" }
+            - { name: "14", label: "Plot 14  (89.33 sq yd)" }
+            - { name: "15", label: "Plot 15  (90.43 sq yd)" }
+            - { name: "16", label: "Plot 16  (91.53 sq yd)" }
+            - { name: "17", label: "Plot 17  (145.02 sq yd)" }
+            - { name: "18", label: "Plot 18  (136 sq yd)" }
+            - { name: "19", label: "Plot 19  (129.4 sq yd)" }
+            - { name: "20", label: "Plot 20  (123 sq yd)" }
+            - { name: "21", label: "Plot 21  (136.1 sq yd)" }
+            - { name: "22", label: "Plot 22  (144 sq yd)" }
+            - { name: "23", label: "Plot 23  (117.33 sq yd)" }
+            - { name: "24", label: "Plot 24  (117.33 sq yd)" }
+            - { name: "25", label: "Plot 25  (117.33 sq yd)" }
+            - { name: "26", label: "Plot 26  (117.33 sq yd)" }
+            - { name: "27", label: "Plot 27  (117.33 sq yd)" }
+            - { name: "28", label: "Plot 28  (117.33 sq yd)" }
+            - { name: "29", label: "Plot 29  (117.33 sq yd)" }
+            - { name: "30", label: "Plot 30  (117.33 sq yd)" }
+            - { name: "31", label: "Plot 31  (133.33 sq yd)" }
+            - { name: "32", label: "Plot 32  (150 sq yd)" }
+            - { name: "33", label: "Plot 33  (138 sq yd)" }
+            - { name: "34", label: "Plot 34  (138 sq yd)" }
+            - { name: "35", label: "Plot 35  (150 sq yd)" }
+            - { name: "36", label: "Plot 36  (133.33 sq yd)" }
+            - { name: "37", label: "Plot 37  (117.33 sq yd)" }
+            - { name: "38", label: "Plot 38  (117.33 sq yd)" }
+            - { name: "39", label: "Plot 39  (117.33 sq yd)" }
+            - { name: "40", label: "Plot 40  (117.33 sq yd)" }
+            - { name: "41", label: "Plot 41  (117.33 sq yd)" }
+            - { name: "42", label: "Plot 42  (117.33 sq yd)" }
+            - { name: "43", label: "Plot 43  (117.33 sq yd)" }
+            - { name: "44", label: "Plot 44  (117.33 sq yd)" }
+            - { name: "45", label: "Plot 45  (144 sq yd)" }
+            - { name: "46", label: "Plot 46  (265.25 sq yd)" }
+            - { name: "47", label: "Plot 47  (133.33 sq yd)" }
+            - { name: "48", label: "Plot 48  (117.33 sq yd)" }
+            - { name: "49", label: "Plot 49  (117.33 sq yd)" }
+            - { name: "50", label: "Plot 50  (117.33 sq yd)" }
+            - { name: "51", label: "Plot 51  (117.33 sq yd)" }
+            - { name: "52", label: "Plot 52  (117.33 sq yd)" }
+            - { name: "53", label: "Plot 53  (117.33 sq yd)" }
+            - { name: "54", label: "Plot 54  (117.33 sq yd)" }
+            - { name: "55", label: "Plot 55  (117.33 sq yd)" }
+            - { name: "56", label: "Plot 56  (117.33 sq yd)" }
+            - { name: "57", label: "Plot 57  (133.33 sq yd)" }
+            - { name: "58", label: "Plot 58  (150 sq yd)" }
+            - { name: "59", label: "Plot 59  (138 sq yd)" }
+            - { name: "60", label: "Plot 60  (138 sq yd)" }
+            - { name: "61", label: "Plot 61  (150 sq yd)" }
+            - { name: "62", label: "Plot 62  (133.33 sq yd)" }
+            - { name: "63", label: "Plot 63  (117.33 sq yd)" }
+            - { name: "64", label: "Plot 64  (117.33 sq yd)" }
+            - { name: "65", label: "Plot 65  (117.33 sq yd)" }
+            - { name: "66", label: "Plot 66  (117.33 sq yd)" }
+            - { name: "67", label: "Plot 67  (117.33 sq yd)" }
+            - { name: "68", label: "Plot 68  (117.33 sq yd)" }
+            - { name: "69", label: "Plot 69  (117.33 sq yd)" }
+            - { name: "70", label: "Plot 70  (117.33 sq yd)" }
+            - { name: "71", label: "Plot 71  (117.33 sq yd)" }
+            - { name: "72", label: "Plot 72  (131.17 sq yd)" }
+            - { name: "73", label: "Plot 73  (117.72 sq yd)" }
+            - { name: "74", label: "Plot 74  (120.41 sq yd)" }
+            - { name: "75", label: "Plot 75  (134.83 sq yd)" }
+            - { name: "76", label: "Plot 76  (112 sq yd)" }
+            - { name: "77", label: "Plot 77  (112 sq yd)" }
+            - { name: "78", label: "Plot 78  (112 sq yd)" }
+            - { name: "79", label: "Plot 79  (112 sq yd)" }
+            - { name: "80", label: "Plot 80  (112 sq yd)" }
+            - { name: "81", label: "Plot 81  (112 sq yd)" }
+            - { name: "82", label: "Plot 82  (112 sq yd)" }
+            - { name: "83", label: "Plot 83  (150 sq yd)" }
+            - { name: "84", label: "Plot 84  (138 sq yd)" }
+            - { name: "85", label: "Plot 85  (138 sq yd)" }
+            - { name: "86", label: "Plot 86  (137.39 sq yd)" }
+            - { name: "87", label: "Plot 87  (102.35 sq yd)" }
+            - { name: "88", label: "Plot 88  (99.63 sq yd)" }
+            - { name: "89", label: "Plot 89  (97 sq yd)" }
+            - { name: "90", label: "Plot 90  (94.36 sq yd)" }
+            - { name: "91", label: "Plot 91  (91.73 sq yd)" }
+            - { name: "92", label: "Plot 92  (89 sq yd)" }
+            - { name: "93", label: "Plot 93  (86.41 sq yd)" }
+            - { name: "94", label: "Plot 94  (100.5 sq yd)" }
+            - { name: "95", label: "Plot 95  (123.42 sq yd)" }
+            - { name: "96", label: "Plot 96  (111.25 sq yd)" }
+            - { name: "97", label: "Plot 97  (106.94 sq yd)" }
+            - { name: "98", label: "Plot 98  (94.51 sq yd)" }
+            - { name: "99", label: "Plot 99  (94.27 sq yd)" }
+            - { name: "100", label: "Plot 100  (94.28 sq yd)" }
+            - { name: "101", label: "Plot 101  (94.21 sq yd)" }
+            - { name: "102", label: "Plot 102  (94 sq yd)" }
+            - { name: "103", label: "Plot 103  (93.96 sq yd)" }
+            - { name: "104", label: "Plot 104  (93.83 sq yd)" }
+            - { name: "105", label: "Plot 105  (93.71 sq yd)" }
+            - { name: "106", label: "Plot 106  (93.58 sq yd)" }
+            - { name: "107", label: "Plot 107  (93.45 sq yd)" }
+            - { name: "108", label: "Plot 108  (93.33 sq yd)" }
+            - { name: "109", label: "Plot 109  (93.2 sq yd)" }
+            - { name: "110", label: "Plot 110  (93.22 sq yd)" }
+            - { name: "111", label: "Plot 111  (93.43 sq yd)" }
+            - { name: "112", label: "Plot 112  (93.68 sq yd)" }
+            - { name: "113", label: "Plot 113  (93.93 sq yd)" }
+            - { name: "114", label: "Plot 114  (94.18 sq yd)" }
+            - { name: "115", label: "Plot 115  (94.43 sq yd)" }
+            - { name: "116", label: "Plot 116  (94.68 sq yd)" }
+            - { name: "117", label: "Plot 117  (94.93 sq yd)" }
+            - { name: "118", label: "Plot 118  (95.17 sq yd)" }
+            - { name: "119", label: "Plot 119  (95.42 sq yd)" }
+            - { name: "120", label: "Plot 120  (107.56 sq yd)" }
+            - { name: "121", label: "Plot 121  (107 sq yd)" }
+            - { name: "122", label: "Plot 122  (96 sq yd)" }
+            - { name: "123", label: "Plot 123  (123.8 sq yd)" }
+            - { name: "124", label: "Plot 124  (121 sq yd)" }
+            - { name: "125", label: "Plot 125  (118.23 sq yd)" }
+            - { name: "126", label: "Plot 126  (115.45 sq yd)" }
+            - { name: "127", label: "Plot 127  (115.25 sq yd)" }
+            - { name: "128", label: "Plot 128  (132 sq yd)" }
+            - { name: "129", label: "Plot 129  (132 sq yd)" }
+            - { name: "130", label: "Plot 130  (132 sq yd)" }
+            - { name: "131", label: "Plot 131  (132 sq yd)" }
+            - { name: "132", label: "Plot 132  (132 sq yd)" }
+            - { name: "133", label: "Plot 133  (132 sq yd)" }
+            - { name: "134", label: "Plot 134  (132 sq yd)" }
+            - { name: "135", label: "Plot 135  (132 sq yd)" }
+            - { name: "136", label: "Plot 136  (132 sq yd)" }
+            - { name: "137", label: "Plot 137  (132 sq yd)" }
+            - { name: "138", label: "Plot 138  (132 sq yd)" }
+            - { name: "139", label: "Plot 139  (132 sq yd)" }
+            - { name: "140", label: "Plot 140  (132 sq yd)" }
+            - { name: "141", label: "Plot 141  (132 sq yd)" }
+            - { name: "142", label: "Plot 142  (132 sq yd)" }
+            - { name: "143", label: "Plot 143  (132 sq yd)" }
+            - { name: "144", label: "Plot 144  (132 sq yd)" }
+            - { name: "145", label: "Plot 145  (132 sq yd)" }
+            - { name: "146", label: "Plot 146  (132 sq yd)" }
+            - { name: "147", label: "Plot 147  (132 sq yd)" }
+            - { name: "148", label: "Plot 148  (132 sq yd)" }
+            - { name: "149", label: "Plot 149  (132 sq yd)" }
+            - { name: "150", label: "Plot 150  (132 sq yd)" }
+            - { name: "151", label: "Plot 151  (132 sq yd)" }
+            - { name: "152", label: "Plot 152  (132 sq yd)" }
+            - { name: "153", label: "Plot 153  (132 sq yd)" }
+            - { name: "154", label: "Plot 154  (82 sq yd)" }
+            - { name: "155", label: "Plot 155  (78.6 sq yd)" }
+            - { name: "156", label: "Plot 156  (139.92 sq yd)" }
+            - { name: "157", label: "Plot 157  (105.55 sq yd)" }
+            - { name: "158", label: "Plot 158  (100.91 sq yd)" }
+            - { name: "159", label: "Plot 159  (96.49 sq yd)" }
+            - { name: "160", label: "Plot 160  (94 sq yd)" }
+            - { name: "161", label: "Plot 161  (93.36 sq yd)" }
+            - { name: "162", label: "Plot 162  (93.1 sq yd)" }
+            - { name: "163", label: "Plot 163  (93.21 sq yd)" }
+            - { name: "164", label: "Plot 164  (93.25 sq yd)" }
+            - { name: "165", label: "Plot 165  (93.21 sq yd)" }
+            - { name: "166", label: "Plot 166  (93.17 sq yd)" }
+            - { name: "167", label: "Plot 167  (102 sq yd)" }
+            - { name: "168", label: "Plot 168  (92.74 sq yd)" }
+            - { name: "169", label: "Plot 169  (92.17 sq yd)" }
+            - { name: "170", label: "Plot 170  (90.96 sq yd)" }
+            - { name: "171", label: "Plot 171  (89.83 sq yd)" }
+            - { name: "172", label: "Plot 172  (88.67 sq yd)" }
+            - { name: "173", label: "Plot 173  (87.5 sq yd)" }
+            - { name: "174", label: "Plot 174  (86.33 sq yd)" }
+            - { name: "175", label: "Plot 175  (127.31 sq yd)" }
+      - name: p1_resale
+        label: "MANSA - 06 - plots available for RESALE (yellow)"
+        type: select
+        description: "Pick every plot in MANSA - 06 that its owner is offering for RESALE. These turn yellow on the website. A plot picked in both lists shows as yellow."
         options:
           multiple: true
           placeholder: "Type a plot number..."
@@ -195,9 +378,139 @@ content:
             - { name: "174", label: "Plot 174  (86.33 sq yd)" }
             - { name: "175", label: "Plot 175  (127.31 sq yd)" }
       - name: p2
-        label: "MANSA - 05 - SOLD plots"
+        label: "MANSA - 05 - SOLD plots (red)"
         type: select
-        description: "Pick every plot that is SOLD in MANSA - 05 (Residential plots). Sold plots turn red on the website; all other plots stay green. Remove a plot from this list to make it available again."
+        description: "Pick every plot that is SOLD in MANSA - 05 (Residential plots). Sold plots turn red on the website; plots in neither list stay green. Remove a plot from this list to make it available again."
+        options:
+          multiple: true
+          placeholder: "Type a plot number..."
+          values:
+            - { name: "1", label: "Plot 1  (140.7 sq yd)" }
+            - { name: "2", label: "Plot 2  (138.7 sq yd)" }
+            - { name: "3", label: "Plot 3  (136.7 sq yd)" }
+            - { name: "4", label: "Plot 4  (134.66 sq yd)" }
+            - { name: "5", label: "Plot 5  (132.7 sq yd)" }
+            - { name: "6", label: "Plot 6  (118.82 sq yd)" }
+            - { name: "7", label: "Plot 7  (67.5 sq yd)" }
+            - { name: "8", label: "Plot 8  (79.55 sq yd)" }
+            - { name: "9", label: "Plot 9  (67.3 sq yd)" }
+            - { name: "10", label: "Plot 10  (103.5 sq yd)" }
+            - { name: "11", label: "Plot 11  (108 sq yd)" }
+            - { name: "12", label: "Plot 12  (106.5 sq yd)" }
+            - { name: "13", label: "Plot 13  (104.8 sq yd)" }
+            - { name: "14", label: "Plot 14  (130 sq yd)" }
+            - { name: "15", label: "Plot 15  (125 sq yd)" }
+            - { name: "16", label: "Plot 16  (125 sq yd)" }
+            - { name: "17", label: "Plot 17  (125 sq yd)" }
+            - { name: "18", label: "Plot 18  (112.5 sq yd)" }
+            - { name: "19", label: "Plot 19  (100 sq yd)" }
+            - { name: "20", label: "Plot 20  (100 sq yd)" }
+            - { name: "21", label: "Plot 21  (74.5 sq yd)" }
+            - { name: "22", label: "Plot 22  (91.1 sq yd)" }
+            - { name: "23", label: "Plot 23  (101.5 sq yd)" }
+            - { name: "24", label: "Plot 24  (95 sq yd)" }
+            - { name: "25", label: "Plot 25  (47 sq yd)" }
+            - { name: "26", label: "Plot 26  (87.55 sq yd)" }
+            - { name: "27", label: "Plot 27  (96.74 sq yd)" }
+            - { name: "28", label: "Plot 28  (98 sq yd)" }
+            - { name: "29", label: "Plot 29  (149.8 sq yd)" }
+            - { name: "30", label: "Plot 30  (100.2 sq yd)" }
+            - { name: "31", label: "Plot 31  (88.9 sq yd)" }
+            - { name: "32", label: "Plot 32  (88.9 sq yd)" }
+            - { name: "33", label: "Plot 33  (88.9 sq yd)" }
+            - { name: "34", label: "Plot 34  (88.9 sq yd)" }
+            - { name: "35", label: "Plot 35  (88.9 sq yd)" }
+            - { name: "36", label: "Plot 36  (92.9 sq yd)" }
+            - { name: "37", label: "Plot 37  (76.7 sq yd)" }
+            - { name: "37B", label: "Plot 37B  (206.64 sq yd)" }
+            - { name: "38", label: "Plot 38  (92.9 sq yd)" }
+            - { name: "39", label: "Plot 39  (92.9 sq yd)" }
+            - { name: "40", label: "Plot 40  (88.9 sq yd)" }
+            - { name: "41", label: "Plot 41  (88.9 sq yd)" }
+            - { name: "42", label: "Plot 42  (88.9 sq yd)" }
+            - { name: "43", label: "Plot 43  (88.9 sq yd)" }
+            - { name: "44", label: "Plot 44  (88.9 sq yd)" }
+            - { name: "45", label: "Plot 45  (112.3 sq yd)" }
+            - { name: "46", label: "Plot 46  (149 sq yd)" }
+            - { name: "47", label: "Plot 47  (138.88 sq yd)" }
+            - { name: "48", label: "Plot 48  (138.88 sq yd)" }
+            - { name: "49", label: "Plot 49  (138.88 sq yd)" }
+            - { name: "50", label: "Plot 50  (138.88 sq yd)" }
+            - { name: "51", label: "Plot 51  (138.88 sq yd)" }
+            - { name: "52", label: "Plot 52  (231.7 sq yd)" }
+            - { name: "53", label: "Plot 53  (231.7 sq yd)" }
+            - { name: "54", label: "Plot 54  (138.88 sq yd)" }
+            - { name: "55", label: "Plot 55  (138.88 sq yd)" }
+            - { name: "56", label: "Plot 56  (138.88 sq yd)" }
+            - { name: "57", label: "Plot 57  (138.88 sq yd)" }
+            - { name: "57B", label: "Plot 57B  (138.88 sq yd)" }
+            - { name: "58", label: "Plot 58  (139 sq yd)" }
+            - { name: "59", label: "Plot 59  (124.2 sq yd)" }
+            - { name: "60", label: "Plot 60  (122.7 sq yd)" }
+            - { name: "61", label: "Plot 61  (124.9 sq yd)" }
+            - { name: "62", label: "Plot 62  (126.73 sq yd)" }
+            - { name: "63", label: "Plot 63  (127.9 sq yd)" }
+            - { name: "64", label: "Plot 64  (128.75 sq yd)" }
+            - { name: "65", label: "Plot 65  (129.6 sq yd)" }
+            - { name: "66", label: "Plot 66  (139.46 sq yd)" }
+            - { name: "67", label: "Plot 67  (129.87 sq yd)" }
+            - { name: "68", label: "Plot 68  (162.5 sq yd)" }
+            - { name: "69", label: "Plot 69  (122.3 sq yd)" }
+            - { name: "70", label: "Plot 70  (123 sq yd)" }
+            - { name: "71", label: "Plot 71  (95 sq yd)" }
+            - { name: "72", label: "Plot 72  (95 sq yd)" }
+            - { name: "73", label: "Plot 73  (95 sq yd)" }
+            - { name: "74", label: "Plot 74  (95 sq yd)" }
+            - { name: "75", label: "Plot 75  (95 sq yd)" }
+            - { name: "76", label: "Plot 76  (95 sq yd)" }
+            - { name: "77", label: "Plot 77  (177.1 sq yd)" }
+            - { name: "78", label: "Plot 78  (138.88 sq yd)" }
+            - { name: "79", label: "Plot 79  (138.88 sq yd)" }
+            - { name: "80", label: "Plot 80  (138.88 sq yd)" }
+            - { name: "81", label: "Plot 81  (138.88 sq yd)" }
+            - { name: "82", label: "Plot 82  (138.88 sq yd)" }
+            - { name: "83", label: "Plot 83  (138.88 sq yd)" }
+            - { name: "84", label: "Plot 84  (138.88 sq yd)" }
+            - { name: "85", label: "Plot 85  (208.88 sq yd)" }
+            - { name: "86", label: "Plot 86  (231.9 sq yd)" }
+            - { name: "87", label: "Plot 87  (138.88 sq yd)" }
+            - { name: "88", label: "Plot 88  (138.88 sq yd)" }
+            - { name: "89", label: "Plot 89  (138.88 sq yd)" }
+            - { name: "90", label: "Plot 90  (138.88 sq yd)" }
+            - { name: "91", label: "Plot 91  (138.88 sq yd)" }
+            - { name: "92", label: "Plot 92  (138.88 sq yd)" }
+            - { name: "93", label: "Plot 93  (138.88 sq yd)" }
+            - { name: "94", label: "Plot 94  (125.27 sq yd)" }
+            - { name: "95", label: "Plot 95  (136.8 sq yd)" }
+            - { name: "97", label: "Plot 97  (141.6 sq yd)" }
+            - { name: "97#2", label: "Plot 97  (145.2 sq yd)" }
+            - { name: "98", label: "Plot 98  (144.33 sq yd)" }
+            - { name: "99", label: "Plot 99  (131.6 sq yd)" }
+            - { name: "100", label: "Plot 100  (131.16 sq yd)" }
+            - { name: "101", label: "Plot 101  (135.46 sq yd)" }
+            - { name: "102", label: "Plot 102  (141.3 sq yd)" }
+            - { name: "103", label: "Plot 103  (173.1 sq yd)" }
+            - { name: "104", label: "Plot 104  (104.2 sq yd)" }
+            - { name: "105", label: "Plot 105  (102.7 sq yd)" }
+            - { name: "106", label: "Plot 106  (101.2 sq yd)" }
+            - { name: "107", label: "Plot 107  (138.53 sq yd)" }
+            - { name: "108", label: "Plot 108  (69.26 sq yd)" }
+            - { name: "109", label: "Plot 109  (77.63 sq yd)" }
+            - { name: "110", label: "Plot 110  (74.54 sq yd)" }
+            - { name: "111", label: "Plot 111  (71.45 sq yd)" }
+            - { name: "112", label: "Plot 112  (69.32 sq yd)" }
+            - { name: "113", label: "Plot 113  (71.55 sq yd)" }
+            - { name: "114", label: "Plot 114  (74.1 sq yd)" }
+            - { name: "115", label: "Plot 115  (75.78 sq yd)" }
+            - { name: "116", label: "Plot 116  (86.17 sq yd)" }
+            - { name: "117", label: "Plot 117  (86.5 sq yd)" }
+            - { name: "118", label: "Plot 118  (80.9 sq yd)" }
+            - { name: "119", label: "Plot 119  (87.2 sq yd)" }
+            - { name: "120", label: "Plot 120  (94.1 sq yd)" }
+      - name: p2_resale
+        label: "MANSA - 05 - plots available for RESALE (yellow)"
+        type: select
+        description: "Pick every plot in MANSA - 05 that its owner is offering for RESALE. These turn yellow on the website. A plot picked in both lists shows as yellow."
         options:
           multiple: true
           placeholder: "Type a plot number..."
@@ -325,9 +638,45 @@ content:
             - { name: "119", label: "Plot 119  (87.2 sq yd)" }
             - { name: "120", label: "Plot 120  (94.1 sq yd)" }
       - name: p3
-        label: "MANSA - 04 - SOLD plots"
+        label: "MANSA - 04 - SOLD plots (red)"
         type: select
-        description: "Pick every plot that is SOLD in MANSA - 04 (Industrial plots). Sold plots turn red on the website; all other plots stay green. Remove a plot from this list to make it available again."
+        description: "Pick every plot that is SOLD in MANSA - 04 (Industrial plots). Sold plots turn red on the website; plots in neither list stay green. Remove a plot from this list to make it available again."
+        options:
+          multiple: true
+          placeholder: "Type a plot number..."
+          values:
+            - { name: "A-1", label: "Plot A-1  (694 sq yd)" }
+            - { name: "A-2", label: "Plot A-2  (674.5 sq yd)" }
+            - { name: "A-3", label: "Plot A-3  (1311 sq yd)" }
+            - { name: "A-4", label: "Plot A-4  (353 sq yd)" }
+            - { name: "A-5", label: "Plot A-5  (353 sq yd)" }
+            - { name: "A-6", label: "Plot A-6  (353 sq yd)" }
+            - { name: "A-7", label: "Plot A-7  (353 sq yd)" }
+            - { name: "B-1", label: "Plot B-1  (1411.6 sq yd)" }
+            - { name: "B-2", label: "Plot B-2  (1411.6 sq yd)" }
+            - { name: "B-3", label: "Plot B-3  (1311 sq yd)" }
+            - { name: "B-4", label: "Plot B-4  (1311 sq yd)" }
+            - { name: "B-5", label: "Plot B-5  (1311 sq yd)" }
+            - { name: "B-6", label: "Plot B-6  (1260.4 sq yd)" }
+            - { name: "C-1", label: "Plot C-1  (1260.4 sq yd)" }
+            - { name: "C-2", label: "Plot C-2  (1260.4 sq yd)" }
+            - { name: "C-3", label: "Plot C-3  (1260.4 sq yd)" }
+            - { name: "C-4", label: "Plot C-4  (1260.4 sq yd)" }
+            - { name: "C-5", label: "Plot C-5  (1260.4 sq yd)" }
+            - { name: "C-5#2", label: "Plot C-5  (1452 sq yd)" }
+            - { name: "C-6", label: "Plot C-6  (1260.4 sq yd)" }
+            - { name: "C-6#2", label: "Plot C-6  (1290.6 sq yd)" }
+            - { name: "C-7", label: "Plot C-7  (1260.4 sq yd)" }
+            - { name: "C-7#2", label: "Plot C-7  (1290.6 sq yd)" }
+            - { name: "C-8", label: "Plot C-8  (1774.6 sq yd)" }
+            - { name: "D-1", label: "Plot D-1  (806.6 sq yd)" }
+            - { name: "D-2", label: "Plot D-2  (1290.6 sq yd)" }
+            - { name: "D-3", label: "Plot D-3  (1290.6 sq yd)" }
+            - { name: "D-4", label: "Plot D-4  (1452 sq yd)" }
+      - name: p3_resale
+        label: "MANSA - 04 - plots available for RESALE (yellow)"
+        type: select
+        description: "Pick every plot in MANSA - 04 that its owner is offering for RESALE. These turn yellow on the website. A plot picked in both lists shows as yellow."
         options:
           multiple: true
           placeholder: "Type a plot number..."

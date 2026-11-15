@@ -7,13 +7,19 @@
   var NS = 'http://www.w3.org/2000/svg';
   var MAPS = window.AP_MAPS || {};
   var PROJECTS = window.AP_PROJECTS || [];
-  var SOLD = {};
+  /* Three states per plot: 'avail' (green), 'sold' (red), 'resale' (yellow - a sold plot its
+     owner is offering again). status.json holds two lists per project: "p1" = sold,
+     "p1_resale" = available for resale. A plot in both lists shows as resale. */
+  var SOLD = {}, RESALE = {};
+  function asSet(v) {
+    if (v == null || v === '') v = [];
+    if (!Array.isArray(v)) v = [v];
+    return new Set(v.map(String));
+  }
   function loadSold(data) {
     Object.keys(MAPS).forEach(function (k) {
-      var v = data && data[k];
-      if (v == null || v === '') v = [];
-      if (!Array.isArray(v)) v = [v];
-      SOLD[k] = new Set(v.map(String));
+      SOLD[k] = asSet(data && data[k]);
+      RESALE[k] = asSet(data && data[k + '_resale']);
     });
   }
   loadSold({});
@@ -38,18 +44,32 @@
   AP.projects = PROJECTS;
   AP.wa = function (msg) { return 'https://wa.me/' + AP.PHONE + '?text=' + encodeURIComponent(msg); };
   AP.project = function (key) { return PROJECTS.filter(function (p) { return p.key === key; })[0]; };
-  AP.isSold = function (key, id) { return SOLD[key].has(String(id)); };
-  AP.setSold = function (key, id, sold) { SOLD[key][sold ? 'add' : 'delete'](String(id)); };
-  AP.soldList = function (key) {
-    return MAPS[key].plots.filter(function (p) { return AP.isSold(key, p.id); }).map(function (p) { return p.id; });
+  AP.STATUS = {
+    avail: { label: 'Available', badge: 'ok' },
+    resale: { label: 'For resale', badge: 're' },
+    sold: { label: 'Sold', badge: 'no' }
   };
+  AP.status = function (key, id) {
+    id = String(id);
+    return RESALE[key].has(id) ? 'resale' : SOLD[key].has(id) ? 'sold' : 'avail';
+  };
+  AP.isSold = function (key, id) { return AP.status(key, id) === 'sold'; };
+  AP.setStatus = function (key, id, st) {
+    id = String(id);
+    SOLD[key][st === 'sold' ? 'add' : 'delete'](id);
+    RESALE[key][st === 'resale' ? 'add' : 'delete'](id);
+  };
+  AP.listOf = function (key, st) {
+    return MAPS[key].plots.filter(function (p) { return AP.status(key, p.id) === st; }).map(function (p) { return p.id; });
+  };
+  AP.soldList = function (key) { return AP.listOf(key, 'sold'); };
   AP.stats = function (key) {
-    var min = Infinity, max = 0, sold = 0, pl = MAPS[key].plots;
+    var min = Infinity, max = 0, n = { avail: 0, sold: 0, resale: 0 }, pl = MAPS[key].plots;
     pl.forEach(function (p) {
-      if (AP.isSold(key, p.id)) sold++;
+      n[AP.status(key, p.id)]++;
       if (p.a) { min = Math.min(min, p.a); max = Math.max(max, p.a); }
     });
-    return { total: pl.length, sold: sold, available: pl.length - sold, min: min, max: max };
+    return { total: pl.length, sold: n.sold, resale: n.resale, available: n.avail, min: min, max: max };
   };
   AP.num = function (n) { return Number(n).toLocaleString('en-IN', { maximumFractionDigits: 2 }); };
 
@@ -98,7 +118,7 @@
     }
     var gp = el('g', {}, vp), polys = {};
     m.plots.forEach(function (p, i) {
-      var cls = 'plot ' + (opt.tint ? 't' + ((i * 7 + (i % 3) * 3) % 5) : AP.isSold(key, p.id) ? 'sold' : 'avail');
+      var cls = 'plot ' + (opt.tint ? 't' + ((i * 7 + (i % 3) * 3) % 5) : AP.status(key, p.id));
       polys[p.id] = el('polygon', { points: p.p, 'class': cls, 'data-id': p.id }, gp);
       // set inline: a url(#id) inside an external stylesheet is resolved against the CSS file, not the page
       if (opt.hatch && !opt.tint && AP.isSold(key, p.id)) polys[p.id].style.fill = 'url(#hatch-sold)';
@@ -108,7 +128,7 @@
       var gn = el('g', {}, vp);
       m.plots.forEach(function (p) {
         var fs = Math.max(4.5, Math.min(20, p.r * (p.n.length > 3 ? 0.62 : p.n.length > 2 ? 0.8 : 0.95)));
-        var t = el('text', { 'class': 'num ' + (AP.isSold(key, p.id) ? 's' : 'a'), x: p.c[0], y: p.c[1], style: 'font-size:' + fs.toFixed(1) + 'px' }, gn);
+        var t = el('text', { 'class': 'num n-' + AP.status(key, p.id), x: p.c[0], y: p.c[1], style: 'font-size:' + fs.toFixed(1) + 'px' }, gn);
         var a = el('tspan', { x: p.c[0], dy: '-0.28em' }, t); a.textContent = p.n;
         var b = el('tspan', { 'class': 'ar', x: p.c[0], dy: '1.25em', style: 'font-size:' + (fs * 0.5).toFixed(1) + 'px' }, t);
         b.textContent = p.a + ' sq yd';
@@ -132,7 +152,7 @@
     stage.innerHTML =
       '<svg role="img" aria-label="Interactive plot layout"></svg>' +
       '<div class="compass" aria-hidden="true"></div>' +
-      '<div class="legend"><span><i class="g"></i>Available</span><span><i class="r"></i>Sold</span></div>' +
+      '<div class="legend"><span><i class="g"></i>Available</span><span><i class="y"></i>For resale</span><span><i class="r"></i>Sold</span></div>' +
       '<div class="zoomer"><button type="button" data-z="in" aria-label="Zoom in">+</button><button type="button" data-z="out" aria-label="Zoom out">&minus;</button>' +
       '<button type="button" data-z="fit" aria-label="Reset view"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button></div>' +
       '<div class="tip"></div><div class="hint">Hold Ctrl and scroll to zoom the map</div>';
@@ -271,7 +291,9 @@
   AP.Map.prototype.select = function (id, fromClick) {
     var p = this.plot(id); if (!p) return false;
     if (this.o.edit && fromClick) {
-      AP.setSold(this.key, id, !AP.isSold(this.key, id));
+      // preview mode: each click steps available -> sold -> for resale -> available
+      var next = { avail: 'sold', sold: 'resale', resale: 'avail' };
+      AP.setStatus(this.key, id, next[AP.status(this.key, id)]);
       this.refresh(id);
     }
     if (this.sel && this.polys[this.sel]) this.polys[this.sel].classList.remove('sel');
@@ -284,25 +306,27 @@
   };
 
   AP.Map.prototype.refresh = function (id) {
-    var sold = AP.isSold(this.key, id);
-    this.polys[id].classList.toggle('sold', sold); this.polys[id].classList.toggle('avail', !sold);
-    this.polys[id].style.fill = sold ? 'url(#hatch-sold)' : '';
-    this.nums[id].classList.toggle('s', sold); this.nums[id].classList.toggle('a', !sold);
+    var st = AP.status(this.key, id), poly = this.polys[id], num = this.nums[id];
+    ['avail', 'sold', 'resale'].forEach(function (s) {
+      poly.classList.toggle(s, s === st);
+      num.classList.toggle('n-' + s, s === st);
+    });
+    poly.style.fill = st === 'sold' ? 'url(#hatch-sold)' : '';
     if (this.o.onChange) this.o.onChange(this.key);
   };
 
   AP.Map.prototype.setFilter = function (f) {
     this.filter = f;
-    this.svg.classList.toggle('f-avail', f === 'avail');
-    this.svg.classList.toggle('f-sold', f === 'sold');
+    var svg = this.svg;
+    ['avail', 'sold', 'resale'].forEach(function (s) { svg.classList.toggle('f-' + s, f === s); });
   };
 
   AP.Map.prototype.hover = function (e) {
     var poly = e.target.closest && e.target.closest('.plot');
     if (!poly) { this.tip.classList.remove('on'); return; }
     var p = this.plot(poly.getAttribute('data-id')), r = this.stage.getBoundingClientRect();
-    var sold = AP.isSold(this.key, p.id);
-    this.tip.innerHTML = 'Plot ' + esc(p.n) + ' &middot; ' + esc(p.a) + ' sq yd<small>' + (sold ? 'Sold' : 'Available') + (p.f.length ? ' &middot; ' + esc(AP.facingText(p, this.key)) + ' facing' : '') + '</small>';
+    var st = AP.status(this.key, p.id);
+    this.tip.innerHTML = 'Plot ' + esc(p.n) + ' &middot; ' + esc(p.a) + ' sq yd<small>' + AP.STATUS[st].label + (p.f.length ? ' &middot; ' + esc(AP.facingText(p, this.key)) + ' facing' : '') + '</small>';
     this.tip.style.left = (e.clientX - r.left) + 'px';
     this.tip.style.top = Math.max(58, e.clientY - r.top) + 'px';
     this.tip.classList.add('on');
@@ -311,7 +335,7 @@
   /* ── detail panel markup ── */
   AP.panelHTML = function (p, key) {
     var proj = AP.project(key) || { name: key, type: '' };
-    var sold = AP.isSold(key, p.id);
+    var st = AP.status(key, p.id), sold = st === 'sold';
     var sqft = p.a * 9, sqm = p.a * 0.836127;
     var facing = AP.facingText(p, key, true);
     var rows = '';
@@ -322,14 +346,18 @@
     if (facing) row('Facing', esc(facing));
     if (p.tag) row('Position', esc(p.tag));
     row('Project', esc(proj.name) + '<small>' + esc(proj.type) + (proj.location ? ' &middot; ' + esc(proj.location) : '') + '</small>');
+    var what = 'Plot ' + p.n + ' (' + p.a + ' sq yd' + (p.f.length ? ', ' + AP.facingText(p, key) + ' facing' : '') + ') in ' + proj.name;
     var msg = sold
       ? 'Hi Aggarwal Properties, Plot ' + p.n + ' in ' + proj.name + ' shows as sold. Please suggest similar available plots (around ' + p.a + ' sq yd).'
-      : 'Hi Aggarwal Properties, I am interested in Plot ' + p.n + ' (' + p.a + ' sq yd' + (p.f.length ? ', ' + AP.facingText(p, key) + ' facing' : '') + ') in ' + proj.name + '. Please share the price and booking details.';
+      : st === 'resale'
+        ? 'Hi Aggarwal Properties, I am interested in ' + what + ', which is listed for resale. Please share the resale price and details.'
+        : 'Hi Aggarwal Properties, I am interested in ' + what + '. Please share the price and booking details.';
     return '<div class="panel-top"><div><small>' + esc(proj.name) + '</small><h2>Plot ' + esc(p.n) + '</h2></div>' +
-      '<span class="badge ' + (sold ? 'no' : 'ok') + '">' + (sold ? 'Sold' : 'Available') + '</span></div>' +
+      '<span class="badge ' + AP.STATUS[st].badge + '">' + AP.STATUS[st].label + '</span></div>' +
+      (st === 'resale' ? '<p class="resale-note">This plot is already owned and is being offered for resale.</p>' : '') +
       '<dl class="specs">' + rows + '</dl>' +
       '<a class="btn btn-wa btn-block" target="_blank" rel="noopener" href="' + esc(AP.wa(msg)) + '">' + AP.icons.wa +
-      (sold ? 'Ask for similar plots' : 'Book this plot on WhatsApp') + '</a>' +
+      (sold ? 'Ask for similar plots' : st === 'resale' ? 'Enquire about this resale plot' : 'Book this plot on WhatsApp') + '</a>' +
       '<p class="panel-note">Area and dimensions are taken from the layout plan. Availability is confirmed on WhatsApp before booking.</p>';
   };
 
