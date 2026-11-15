@@ -256,7 +256,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
   background: radial-gradient(circle at 36% 34%, #FFF1A8, var(--sun-400) 45%, var(--orange-500));
   box-shadow: 0 0 0 22px rgba(255, 194, 26, .2); z-index: 0;
 }
-.portrait img { position: relative; z-index: 1; width: 100%; aspect-ratio: 5 / 6; object-fit: cover; object-position: 50% 0; border-radius: 220px 220px var(--radius) var(--radius); box-shadow: var(--shadow); }
+.portrait img { position: relative; z-index: 1; width: 100%; height: auto; aspect-ratio: 5 / 6; object-fit: cover; object-position: 50% 0; border-radius: 220px 220px var(--radius) var(--radius); box-shadow: var(--shadow); }
 .portrait-tag {
   position: absolute; z-index: 2; left: -14px; bottom: 28px; background: #fff; border-radius: 18px; padding: 14px 18px;
   box-shadow: var(--shadow); font-size: 14px; color: var(--ink-2); line-height: 1.3;
