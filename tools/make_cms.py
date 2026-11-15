@@ -27,6 +27,14 @@ out = [
     "# This is the form the client sees in the editor (app.pagescms.org). Saving it commits",
     "# data/status.json to this repo; GitHub Pages then republishes the site (about a minute).",
     "",
+    "# Photos uploaded in the editor are stored here. No leading slash on output: the site",
+    "# lives in a sub-folder on github.io, so paths must stay relative.",
+    "media:",
+    "  input: assets/uploads",
+    "  output: assets/uploads",
+    "  rename: safe",
+    "  categories: [image]",
+    "",
     "content:",
     "  - name: sold",
     '    label: "Sold & resale plots"',
@@ -59,5 +67,70 @@ for key, m in maps.items():
         ]
         for p in m["plots"]:
             out.append(f"            - {{ name: {q(p['id'])}, label: {q('Plot ' + p['n'] + '  (' + format(p['a'], 'g') + ' sq yd)')} }}")
+
+# The "Properties with us" tab on the Projects page: one list, saved as an array in
+# data/properties.json. Each entry is one property card.
+out += """
+  - name: properties
+    label: "Properties with us"
+    type: file
+    path: data/properties.json
+    format: json
+    list: true
+    fields:
+      - name: title
+        label: Property title
+        type: string
+        required: true
+        description: "e.g. 200 sq yd corner plot, Sector 14 / 3 BHK house / Shop on main road"
+      - name: type
+        label: Property type
+        type: select
+        options:
+          values: [Plot, House / Kothi, Flat / Apartment, Shop / Showroom, Office / Commercial, Industrial, Agricultural land, Other]
+      - name: purpose
+        label: For
+        type: select
+        options:
+          values: [For sale, For rent]
+      - name: status
+        label: Status
+        type: select
+        required: true
+        default: available
+        description: "Sold properties stay on the website with a red Sold badge. Hidden removes it from the website without deleting it."
+        options:
+          values:
+            - { name: available, label: Available }
+            - { name: sold, label: Sold }
+            - { name: hidden, label: Hidden (not shown on website) }
+      - name: location
+        label: Location / locality
+        type: string
+      - name: size
+        label: Size
+        type: string
+        description: "Write it as you want it shown, e.g. 200 sq yd / 3 BHK, 150 sq yd / 2 acres"
+      - name: price
+        label: Price
+        type: string
+        description: "Write it as you want it shown, e.g. Rs 45 Lakh or Rs 25,000 / month. Leave empty to show On request."
+      - name: facing
+        label: Facing (optional)
+        type: select
+        options:
+          values: [East, West, North, South, North-East, North-West, South-East, South-West]
+      - name: description
+        label: Short description
+        type: text
+      - name: photos
+        label: Photos
+        type: image
+        description: "First photo is the cover. Phone photos are fine."
+        options:
+          multiple:
+            max: 12
+          extensions: [jpg, jpeg, png, webp]
+""".strip("\n").split("\n")
 (root / ".pages.yml").write_text("\n".join(out) + "\n", "utf-8")
 print("wrote .pages.yml:", {k: len(m["plots"]) for k, m in maps.items()}, names)

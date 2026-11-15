@@ -28,15 +28,22 @@
   /* Pages wait for AP.ready before drawing. The sold list is fetched fresh on every visit
      ('no-cache' = always re-check with the server), so a save in the CMS shows up as soon
      as GitHub has republished. If the file can't be read, everything shows as available. */
+  AP.properties = [];   // data/properties.json - other properties listed with the firm (CMS)
+  function getJSON(url) {
+    return fetch(url, { cache: 'no-cache' }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); });
+  }
   AP.ready = new Promise(function (resolve) {
     var done = false;
-    function finish(data) { if (done) return; done = true; if (data) loadSold(data); resolve(); }
-    setTimeout(function () { finish(null); }, 4000);
+    function finish() { if (done) return; done = true; resolve(); }
+    setTimeout(finish, 4000);
     try {
-      fetch('data/status.json', { cache: 'no-cache' })
-        .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
-        .then(finish, function () { finish(null); });
-    } catch (e) { finish(null); }
+      Promise.all([
+        getJSON('data/status.json').then(loadSold, function () {}),
+        getJSON('data/properties.json').then(function (d) {
+          AP.properties = (Array.isArray(d) ? d : []).filter(function (p) { return p && p.title && p.status !== 'hidden'; });
+        }, function () {})
+      ]).then(finish, finish);
+    } catch (e) { finish(); }
   });
   AP.PHONE = '917015070104';
   AP.PHONE_DISPLAY = '+91 70150 70104';
@@ -88,6 +95,7 @@
     var ft = Math.floor(w), inch = Math.round((w - ft) * 12);
     return ft + "'" + (inch ? inch + '"' : '') + ' wide ' + ((AP.project(key) || {}).roadWord || 'road');
   }
+  AP.esc = esc;
   AP.facingText = function (p, key, withRoad) {
     if (!p.f.length) return '';
     return p.f.map(function (f) {

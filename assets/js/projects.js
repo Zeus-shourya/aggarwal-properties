@@ -12,13 +12,89 @@ window.AP.ready.then(function () {
 
   var map = new AP.Map(stage, { edit: edit, onSelect: onSelect, onChange: function () { renderCounts(); renderList(); renderTabs(); } });
 
+  var PROPS = 'properties';   // the extra tab: other properties listed with the firm
+  var props = AP.properties, propFilter = 'all';
+  var propAvail = props.filter(function (p) { return p.status !== 'sold'; }).length;
+
   function renderTabs() {
     tabs.innerHTML = keys.map(function (k) {
       var p = AP.project(k), s = AP.stats(k);
       return '<button type="button" class="ptab" role="tab" data-key="' + k + '" aria-selected="' + (k === current) + '">' +
         '<b>' + p.name + '</b><span>' + p.type + ' &middot; <em>' + s.available + ' of ' + s.total + ' available</em>' +
         (s.resale ? ' &middot; <em class="y">' + s.resale + ' for resale</em>' : '') + '</span></button>';
-    }).join('');
+    }).join('') +
+      '<button type="button" class="ptab ptab-props" role="tab" data-key="' + PROPS + '" aria-selected="' + (current === PROPS) + '">' +
+      '<b>Properties with us</b><span>Plots, houses, shops &amp; land &middot; <em>' +
+      (props.length ? propAvail + ' available' : 'ask us') + '</em></span></button>';
+  }
+
+  /* ── "Properties with us" tab ── */
+  var houseArt = '<svg viewBox="0 0 120 90" fill="none" aria-hidden="true"><circle cx="92" cy="26" r="14" fill="#FFD23F"/><path d="M14 78h92" stroke="#F25A05" stroke-width="4" stroke-linecap="round"/><path d="M26 78V46l26-20 26 20v32z" fill="#fff" stroke="#F25A05" stroke-width="4" stroke-linejoin="round"/><path d="M45 78V58h14v20" stroke="#F25A05" stroke-width="4" stroke-linejoin="round"/></svg>';
+  function src(path) { return String(path || '').replace(/^\/+/, ''); }
+  function propCard(p, i) {
+    var e = AP.esc, sold = p.status === 'sold';
+    var photos = (Array.isArray(p.photos) ? p.photos : p.photos ? [p.photos] : []).map(src).filter(Boolean);
+    var kind = [p.type, p.purpose].filter(Boolean).join(' · ');
+    var msg = sold
+      ? 'Hi Aggarwal Properties, "' + p.title + '" shows as sold on your website. Please suggest something similar.'
+      : 'Hi Aggarwal Properties, I am interested in "' + p.title + '"' + (p.location ? ' (' + p.location + ')' : '') + ' listed on your website. Please share the details.';
+    var facts = '';
+    if (p.size) facts += '<span><b>' + e(p.size) + '</b>Size</span>';
+    facts += '<span><b>' + e(p.price || 'On request') + '</b>Price</span>';
+    if (p.facing) facts += '<span><b>' + e(p.facing) + '</b>Facing</span>';
+    return '<article class="card prop' + (sold ? ' is-sold' : '') + '" data-i="' + i + '">' +
+      '<div class="prop-img" data-n="0">' +
+      (photos.length ? '<img src="' + e(photos[0]) + '" alt="' + e(p.title) + '" loading="lazy">' : houseArt) +
+      '<span class="badge ' + (sold ? 'no' : 'ok') + '">' + (sold ? 'Sold' : 'Available') + '</span>' +
+      (photos.length > 1 ? '<button type="button" class="prop-nav prev" aria-label="Previous photo">&lsaquo;</button><button type="button" class="prop-nav next" aria-label="Next photo">&rsaquo;</button><span class="prop-count">1 / ' + photos.length + '</span>' : '') +
+      '</div><div class="pcard-body">' +
+      (kind ? '<span class="pcard-type">' + e(kind) + '</span>' : '') +
+      '<h3>' + e(p.title) + '</h3>' +
+      (p.location ? '<span class="pcard-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg>' + e(p.location) + '</span>' : '') +
+      (p.description ? '<p>' + e(p.description) + '</p>' : '') +
+      '<div class="pcard-facts">' + facts + '</div>' +
+      '<a class="btn btn-wa btn-block" target="_blank" rel="noopener" href="' + e(AP.wa(msg)) + '">' + AP.icons.wa + (sold ? 'Ask for something similar' : 'Enquire on WhatsApp') + '</a>' +
+      '</div></article>';
+  }
+  function renderProps() {
+    var grid = $('prop-grid'), bar = $('prop-chips');
+    if (!props.length) {
+      bar.innerHTML = '';
+      grid.innerHTML = '<div class="prop-empty">' + houseArt + '<b>New properties are being added</b>' +
+        '<p>Tell us what you are looking for (plot, house, shop or land, your area and budget) and we will share what we have.</p>' +
+        '<a class="btn btn-wa" target="_blank" rel="noopener" href="' + AP.esc(AP.wa('Hi Aggarwal Properties, I am looking for a property. Please share what you have available.')) + '">' + AP.icons.wa + 'Ask on WhatsApp</a></div>';
+      return;
+    }
+    var types = [];
+    props.forEach(function (p) { if (p.type && types.indexOf(p.type) < 0) types.push(p.type); });
+    bar.innerHTML = '<button type="button" class="chip" data-t="all" aria-pressed="' + (propFilter === 'all') + '">All <b>' + props.length + '</b></button>' +
+      (types.length > 1 ? types.map(function (t) {
+        return '<button type="button" class="chip" data-t="' + AP.esc(t) + '" aria-pressed="' + (propFilter === t) + '">' + AP.esc(t) + ' <b>' +
+          props.filter(function (p) { return p.type === t; }).length + '</b></button>';
+      }).join('') : '');
+    // available first, sold last
+    var shown = props.map(function (p, i) { return { p: p, i: i }; })
+      .filter(function (x) { return propFilter === 'all' || x.p.type === propFilter; })
+      .sort(function (a, b) { return (a.p.status === 'sold') - (b.p.status === 'sold') || a.i - b.i; });
+    grid.innerHTML = shown.map(function (x) { return propCard(x.p, x.i); }).join('');
+  }
+  $('prop-chips').addEventListener('click', function (e) {
+    var c = e.target.closest('.chip'); if (!c) return;
+    propFilter = c.getAttribute('data-t'); renderProps();
+  });
+  $('prop-grid').addEventListener('click', function (e) {
+    var b = e.target.closest('.prop-nav'); if (!b) return;
+    var box = b.closest('.prop-img'), p = props[+b.closest('.prop').getAttribute('data-i')];
+    var photos = (Array.isArray(p.photos) ? p.photos : [p.photos]).map(src).filter(Boolean);
+    var n = (+box.getAttribute('data-n') + (b.classList.contains('next') ? 1 : photos.length - 1)) % photos.length;
+    box.setAttribute('data-n', n);
+    box.querySelector('img').src = photos[n];
+    box.querySelector('.prop-count').textContent = (n + 1) + ' / ' + photos.length;
+  });
+  function showView(isProps) {
+    $('propview').hidden = !isProps; $('mapview').hidden = isProps;
+    $('lead-props').hidden = !isProps; $('lead-map').hidden = isProps;
+    document.querySelector('.page-hero h1').textContent = isProps ? 'Properties with Aggarwal Properties.' : 'Pick your plot on the map.';
   }
   tabs.addEventListener('click', function (e) {
     var b = e.target.closest('.ptab'); if (b) load(b.getAttribute('data-key'));
@@ -75,8 +151,15 @@ window.AP.ready.then(function () {
   }
 
   function load(key, plotId) {
+    if (key === PROPS) {
+      current = PROPS;
+      showView(true); renderTabs(); renderProps();
+      history.replaceState(null, '', location.pathname + location.search + '#' + PROPS);
+      return;
+    }
     if (!AP.maps[key]) key = keys[0];
     current = key;
+    showView(false);
     map.load(key);
     renderTabs(); renderCounts(); renderList(); emptyPanel();
     search.value = '';

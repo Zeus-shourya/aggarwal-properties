@@ -18,7 +18,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Figtree:wght@400..800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/site.css?v=20261115c">
+<link rel="stylesheet" href="assets/css/site.css?v=20261115d">
 </head>
 <body>
 
@@ -50,12 +50,24 @@
   <div class="wrap">
     <span class="eyebrow">Projects</span>
     <h1>Pick your plot on the map.</h1>
-    <p class="lead">Choose a project, then tap any plot for its area, dimensions and facing. <b style="color:var(--avail-dark)">Green</b> plots are available, <b style="color:var(--resale-dark);background:#FFE44D;padding:0 6px;border-radius:6px">yellow</b> plots are available for resale and <b style="color:var(--sold-dark)">red</b> plots are sold.</p>
+    <p class="lead" id="lead-props" hidden>Properties listed with Aggarwal Properties outside our mapped projects. Pick one and message us on WhatsApp for details and a visit.</p>
+    <p class="lead" id="lead-map">Choose a project, then tap any plot for its area, dimensions and facing. <b style="color:var(--avail-dark)">Green</b> plots are available, <b style="color:var(--resale-dark);background:#FFE44D;padding:0 6px;border-radius:6px">yellow</b> plots are available for resale and <b style="color:var(--sold-dark)">red</b> plots are sold.</p>
     <div class="ptabs" id="ptabs" role="tablist" aria-label="Projects"></div>
   </div>
 </section>
 
-<section>
+<section id="propview" hidden>
+  <div class="wrap">
+    <div class="section-head" style="margin:34px 0 22px">
+      <div><span class="eyebrow">Properties with us</span><h2 style="font-size:clamp(28px,3.4vw,42px);max-width:22ch">Other properties you can buy or rent through Aggarwal Properties.</h2></div>
+      <p>Plots, houses, shops and land outside our mapped projects. Message us about any of them on WhatsApp.</p>
+    </div>
+    <div class="chips" id="prop-chips" role="group" aria-label="Filter properties"></div>
+    <div class="props" id="prop-grid"></div>
+  </div>
+</section>
+
+<section id="mapview">
   <div class="wrap">
     <div class="mapwrap">
       <div class="mapcard">
@@ -136,10 +148,10 @@
   <span class="ico" data-icon="wa"></span>
 </a>
 
-<script src="data/projects.js?v=20261115c"></script>
-<script src="assets/js/plots-data.js?v=20261115c"></script>
-<script src="assets/js/plotmap.js?v=20261115c"></script>
-<script src="assets/js/site.js?v=20261115c"></script>
-<script src="assets/js/projects.js?v=20261115c"></script>
+<script src="data/projects.js?v=20261115d"></script>
+<script src="assets/js/plots-data.js?v=20261115d"></script>
+<script src="assets/js/plotmap.js?v=20261115d"></script>
+<script src="assets/js/site.js?v=20261115d"></script>
+<script src="assets/js/projects.js?v=20261115d"></script>
 </body>
 </html>
