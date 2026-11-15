@@ -1,5 +1,5 @@
 /* Projects page: project tabs, the interactive map, plot details, plot list. */
-(function () {
+window.AP.ready.then(function () {
   'use strict';
   var AP = window.AP;
   var params = new URLSearchParams(location.search);
@@ -102,18 +102,20 @@
     map.setFilter(c.getAttribute('data-f'));
   });
 
-  /* owner's edit mode: projects.html?edit=1 */
+  /* Preview mode: projects.html?edit=1 - try out sold/available on the map without saving.
+     The real, saved list is edited in the CMS (see admin.html). */
   if (edit) {
     var bar = document.createElement('div');
     bar.className = 'editbar';
-    bar.innerHTML = '<div class="wrap"><span>Edit mode &mdash; click a plot to flip it between available (green) and sold (red). Nothing is saved until you paste the copied text into <code>data/status.js</code>.</span>' +
-      '<button type="button" class="btn btn-sun" id="copy-status">Copy status file</button></div>';
+    bar.innerHTML = '<div class="wrap"><span>Preview mode &mdash; click a plot to flip it between available (green) and sold (red). This is only a preview: to save, tick the same plots in the <a href="admin.html" style="color:#FFD75A">website editor</a>.</span>' +
+      '<button type="button" class="btn btn-sun" id="copy-status">Copy as status.json</button></div>';
     document.querySelector('main').prepend(bar);
     $('copy-status').addEventListener('click', function () {
-      var text = '/* Sold plots per project. Edit by hand, or use projects.html?edit=1 and paste here. */\nwindow.AP_SOLD = {\n' +
-        keys.map(function (k) { return '  ' + k + ': ' + JSON.stringify(AP.soldList(k)); }).join(',\n') + '\n};\n';
+      var o = {};
+      keys.forEach(function (k) { o[k] = AP.soldList(k); });
+      var text = JSON.stringify(o, null, 2) + '\n';
       var btn = this;
-      function done(ok) { btn.textContent = ok ? 'Copied — paste into data/status.js' : 'Copy failed — see console'; if (!ok) console.log(text); }
+      function done(ok) { btn.textContent = ok ? 'Copied' : 'Copy failed — see console'; if (!ok) console.log(text); }
       if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(false); });
       else done(false);
     });
@@ -125,4 +127,4 @@
     var n = decodeURIComponent(location.hash.slice(1)).split('/');
     if (n[0] && n[0] !== current) load(n[0], n[1]);
   });
-})();
+});

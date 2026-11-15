@@ -1,5 +1,6 @@
-/* Aggarwal Properties — shared page behaviour */
-(function () {
+/* Aggarwal Properties — shared page behaviour.
+   Runs once the sold list (data/status.json) has been fetched - see AP.ready in plotmap.js. */
+window.AP.ready.then(function () {
   'use strict';
   var AP = window.AP;
   var root = document.documentElement;
@@ -108,4 +109,4 @@
   } else {
     items.forEach(function (n) { n.classList.add('in'); });
   }
-})();
+});

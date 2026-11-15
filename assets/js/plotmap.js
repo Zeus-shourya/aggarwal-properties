@@ -1,6 +1,6 @@
 /* Aggarwal Properties — interactive plot maps.
    Data:  assets/js/plots-data.js (geometry, generated from the plan PDFs)
-          data/status.js          (which plots are sold)
+          data/status.json        (which plots are sold - edited through the CMS)
           data/projects.js        (project names) */
 (function () {
   'use strict';
@@ -8,11 +8,30 @@
   var MAPS = window.AP_MAPS || {};
   var PROJECTS = window.AP_PROJECTS || [];
   var SOLD = {};
-  Object.keys(MAPS).forEach(function (k) {
-    SOLD[k] = new Set(((window.AP_SOLD || {})[k] || []).map(String));
-  });
+  function loadSold(data) {
+    Object.keys(MAPS).forEach(function (k) {
+      var v = data && data[k];
+      if (v == null || v === '') v = [];
+      if (!Array.isArray(v)) v = [v];
+      SOLD[k] = new Set(v.map(String));
+    });
+  }
+  loadSold({});
 
   var AP = (window.AP = window.AP || {});
+  /* Pages wait for AP.ready before drawing. The sold list is fetched fresh on every visit
+     ('no-cache' = always re-check with the server), so a save in the CMS shows up as soon
+     as GitHub has republished. If the file can't be read, everything shows as available. */
+  AP.ready = new Promise(function (resolve) {
+    var done = false;
+    function finish(data) { if (done) return; done = true; if (data) loadSold(data); resolve(); }
+    setTimeout(function () { finish(null); }, 4000);
+    try {
+      fetch('data/status.json', { cache: 'no-cache' })
+        .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+        .then(finish, function () { finish(null); });
+    } catch (e) { finish(null); }
+  });
   AP.PHONE = '917015070104';
   AP.PHONE_DISPLAY = '+91 70150 70104';
   AP.maps = MAPS;
