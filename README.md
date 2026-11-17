@@ -1,11 +1,21 @@
 # Aggarwal Properties
 
-Live at https://zeus-shourya.github.io/aggarwal-properties/ (GitHub Pages, `main` branch).
+Live at https://aggarwalpropertiess.com/ (GitHub Pages from repo
+`Zeus-shourya/aggarwal-properties`, `main` branch root; the `CNAME` file holds the
+domain). The old https://zeus-shourya.github.io/aggarwal-properties/ address redirects.
 
-The planned domain is aggarwalpropertiess.com, not bought yet. When it is: add a
-`CNAME` file containing the domain, set the DNS records, and replace the
-`zeus-shourya.github.io/aggarwal-properties/` URLs in the four HTML files,
-`sitemap.xml` and `robots.txt` with the domain.
+DNS (GoDaddy, nameservers `ns69/ns70.domaincontrol.com`):
+
+| Type | Name | Value |
+| --- | --- | --- |
+| A | @ | 185.199.108.153 |
+| A | @ | 185.199.109.153 |
+| A | @ | 185.199.110.153 |
+| A | @ | 185.199.111.153 |
+| CNAME | www | zeus-shourya.github.io |
+
+Canonical, Open Graph, JSON-LD, `sitemap.xml` and `robots.txt` all use
+`https://aggarwalpropertiess.com/`.
 
 Static site (no build step). Four pages: `index.html` (Home), `about.html`,
 `projects.html` (interactive plot maps), `investors.html`.
